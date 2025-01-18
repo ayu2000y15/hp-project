@@ -31,9 +31,6 @@ class AdminDataEntryController extends Controller
         $data = $this->hpData->getHpData();
         $rowIdCount = $this->hpData->getHpDataCount();
 
-        \Debugbar::addMessage($data);
-
-
         return view('admin.data-entry', compact('master', 'headerData', 'headerCount','data', 'rowIdCount'));
     }
 
@@ -65,21 +62,16 @@ class AdminDataEntryController extends Controller
         ->with($result["status"] ,$result["mess"]);
     }
 
-    //hp_headers更新
-    public function updateHeader(Request $request)
+    //hp_data更新
+    public function updateData(Request $request)
     {
         $validatedData = $request->validate([
-            'header_id' => 'required|string',
-            'master_id' => 'required|string',
-            'col_name' => 'required|string',
-            'view_name' => 'required|string',
-            'type' => 'required|string',
-            'required_flg' => 'required|string',
-            'public_flg' => 'required|string',
+            'data_id' => 'required|string',
+            'value' => 'string',
         ]);
 
-        $result = $this->hpHeader->update($validatedData);
-        return redirect()->route('admin.data')
+        $result = $this->hpData->update($validatedData);
+        return redirect()->route('admin.data-entry')
         ->with($result["status"] ,$result["mess"]);
     }
 

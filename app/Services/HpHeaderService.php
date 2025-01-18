@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\HpHeader;
 use App\Models\HpKey;
+use App\Models\HpData;
+
 use Illuminate\Support\Facades\DB;
 use App\Services\CommonService;
 
@@ -83,6 +85,20 @@ class HpHeaderService
 
         HpHeader::create($data);
 
+        //追加した項目の空データを登録
+        $maxRowId = HpData::where('header_id', $data["master_id"] . "001")->max('row_id');
+
+        for($i = 1; $i <= $maxRowId; $i++){
+            HpData::create([
+                "header_id" => $key,
+                "row_id" => $i,
+                "data" => null,
+                "priority" => 0,
+                "public_flg" => "1",
+                "delete_flg" => '0',
+            ]);
+        }
+
         $result = [
             "status" => "success",
             "mess" => "項目が登録されました。",
@@ -109,6 +125,15 @@ class HpHeaderService
 
     //データ削除
     public function delete($headerId){
+        $count = HpHeader::where('header_id', $headerId)->count();
+
+        if($count > 0){
+            $result = [
+                "status" => "error",
+                "mess" => "項目が使用されています。削除できません。",
+            ];
+            return $result;
+        }
         HpHeader::where('header_id', $headerId)->delete();
 
         $result = [

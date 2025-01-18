@@ -23,6 +23,7 @@ class HpDataService
             'header.header_id as header_id',
             'header.col_name as col_name',
             'header.view_name as view_name',
+            'header.type as type',
         )
         ->join('hp_headers as header', 'data.header_id', '=', 'header.header_id')
         ->where('data.delete_flg', '0')
@@ -101,6 +102,20 @@ class HpDataService
             "mess" => "データが登録されました。",
         ];
 
+        return $result;
+    }
+
+    //データ更新
+    public function update($data){
+        HpData::where('data_id', $data["data_id"])
+        ->update([
+            "data" => $data["value"],
+        ]);
+
+        $result = [
+            "status" => "success",
+            "mess" => "データが更新されました。",
+        ];
         return $result;
     }
 }

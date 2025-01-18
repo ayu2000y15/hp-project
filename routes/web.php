@@ -52,4 +52,6 @@ Route::get('/admin/data-entry', [AdminDataEntryController::class, 'dataEntry'])-
 Route::get('/admin/store-data-entry', [AdminDataEntryController::class, 'storeDataEntryGet'])->name('admin.data-entry.storeDataEntryGet');
 Route::post('/admin/store-data-entry', [AdminDataEntryController::class, 'storeDataEntry'])->name('admin.data-entry.storeDataEntry');
 Route::post('/admin/store-data-entry/store', [AdminDataEntryController::class, 'storeData'])->name('admin.data-entry.storeData');
+Route::post('/admin/store-data-entry/update', [AdminDataEntryController::class, 'updateData'])->name('admin.data-entry.updateData');
+
 

@@ -20,6 +20,10 @@ class CommonService
                             "row_id" => $item->row_id,
                             "data" => $item->data,
                             "view_name" => $item->view_name,
+                            "col_name" => $item->col_name,
+                            "header_id" => $item->header_id,
+                            "type" => $item->type,
+                            "data_id" => $item->data_id,
                         ],
                 ];
             }

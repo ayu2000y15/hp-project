@@ -19,10 +19,10 @@
 </style>
 <div class="hero home-slide">
     <div class="slideshow">
-        <img src="storage/img/sample/top1.jpg" class="slideshow-image" alt="スライド1">
-        <img src="storage/img/sample/top2.jpg" class="slideshow-image" alt="スライド2">
-        <img src="storage/img/sample/top3.jpg" class="slideshow-image" alt="スライド3">
-        <img src="storage/img/sample/sample.png" class="slideshow-image" alt="スライド4">
+        <img src="storage/img/sample/slide.jpg" class="slideshow-image" width="1920" height="400" alt="スライド1">
+        <img src="storage/img/sample/slide2.jpg" class="slideshow-image" width="1920" height="400" alt="スライド2">
+        <img src="storage/img/sample/top3.jpg" class="slideshow-image" width="1920" height="400" alt="スライド3">
+        <img src="storage/img/sample/sample.png" class="slideshow-image" width="1920" height="400" alt="スライド4">
     </div>
     <div class="slideshow-dots">
         @for ($i = 0; $i < 4; $i++)
@@ -36,9 +36,11 @@
         <h1 class="home-title about" style="color: #d7c5db;">ABOUT</h1>
         <p>パステルライブは、Vtuber事務所です。</p>
         <div class="home-button-wrapper">
-            <button type="submit" class="btn submit-button">
-                <img class="home-btn-img" src="storage/img/hp/view_more-btn.png" alt="Button Image" >
-            </button>
+            <form action="{{ route('about') }}">
+                <button type="submit" class="btn submit-button">
+                    <img class="home-btn-img" src="storage/img/hp/view_more-btn.png" alt="Button Image" >
+                </button>
+            </form>
         </div>
     </div>
 </div>

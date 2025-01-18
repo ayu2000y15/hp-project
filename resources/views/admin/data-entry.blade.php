@@ -43,7 +43,24 @@
                                 @foreach ($data as $item)
                                 @if($title['master_id'] == $item["master_id"])
                                     @if($item["row_id"] == $i)
-                                        <td>{!! nl2br(e($item["data"])) !!}</td>
+                                        <td>
+                                            <div id="view-area_{{$item["data_id"]}}">
+                                                <button class="change-active-btn" id="change-active_{{$item["data_id"]}}">編集</button>
+                                                {!! nl2br(e($item["data"])) !!}<br>
+                                            </div>
+                                            <div id="change-area_{{$item["data_id"]}}" style="display: none;">
+                                                <form action="{{ route('admin.data-entry.updateData') }}" method="post">
+                                                    @csrf
+                                                    @if($item["type"] == "textarea")
+                                                        <textarea rows="5" name="value">{!! nl2br(e($item["data"])) !!}</textarea>
+                                                    @else
+                                                        <input type="{{ $item["type"] }}" name="value" value="{!! nl2br(e($item["data"])) !!}">
+                                                    @endif
+                                                    <input type="hidden" name="data_id" value="{{ $item["data_id"] }}" >
+                                                    <button class="change-btn">更新</button>
+                                                </form>
+                                            </div>
+                                        </td>
                                     @endif
                                 @endif
                                 @endforeach
@@ -62,6 +79,15 @@
         @endforeach
     </div>
 
+<style>
+    .data-table thead {
+        position: sticky;
+        top: 0;
+        background-color: #f8f8f8;
+        z-index: 1;
+    }
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // タブ切り替えの処理
@@ -78,7 +104,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             button.classList.add('active');
             document.getElementById(`tab-${tabId}`).classList.add('active');
-
         });
     });
 
@@ -87,11 +112,31 @@ document.addEventListener('DOMContentLoaded', function() {
         tabButtons[0].click();
     }
 
-    //form時の処理
-    newEntryBtn.forEach(button => {
-        button.addEventListener('click', () => {
-            const tabId = button.getAttribute('data-tab');
-            document.getElementById('header_id').value = tabId;
+    // form時の処理
+    if (newEntryBtn) {
+        newEntryBtn.addEventListener('click', () => {
+            const activeTab = document.querySelector('.tab-button.active');
+            if (activeTab) {
+                const tabId = activeTab.getAttribute('data-tab');
+                document.getElementById('header_id').value = tabId;
+            }
+        });
+    }
+
+    // 変更ボタンの処理を追加
+    const changeButtons = document.querySelectorAll('.change-active-btn');
+    changeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const dataId = this.id.split('_')[1];
+            document.getElementById(`view-area_${dataId}`).style.display = 'none';
+            document.getElementById(`change-area_${dataId}`).style.display = 'block';
+
+            // 他のボタンを無効化
+            changeButtons.forEach(btn => {
+                if (btn !== this) {
+                    btn.disabled = true;
+                }
+            });
         });
     });
 });

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Pastel Live') - Vtuber事務所</title>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
+    <script src="{{ asset('js/menu.js') }}" defer></script>
 </head>
 <style>
     body {
@@ -19,10 +19,10 @@
     <header>
         <div class="header-content">
             <a href="{{ route('home') }}" class="logo">
-                <img src="{{ asset('images/pastel-live-logo.png') }}" alt="Pastel Live">
+                <img src="{{ asset('storage/img/sample/logo.jpg') }}" alt="Pastel Live">
             </a>
 
-            <nav>
+            <nav class="main-nav">
                 <ul>
                     <li><a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">HOME</a></li>
                     <li><a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">ABOUT</a></li>
@@ -34,6 +34,12 @@
             </nav>
 
             <a href="#" class="official-shop-button">OFFICIAL SHOP</a>
+
+            <button class="menu-toggle" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
@@ -48,4 +54,3 @@
     </footer>
 </body>
 </html>
-
